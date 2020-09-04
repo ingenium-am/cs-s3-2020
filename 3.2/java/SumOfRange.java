@@ -2,21 +2,28 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class SumOfRange {
-  public static void main(String[] args) {
-      Scanner in = new Scanner(System.in);
+    public static void main(String[] args) {
 
-      System.out.print("Set number: ");
-      // n is declared and initialized
-      int n = in.nextInt();
+        // create Scanner object
+        Scanner in = new Scanner(System.in);
 
-      int[] range = new int[n];
-      int sum = 0;
+        System.out.print("Set number: ");
+        // trying to parse input as an int
+        // n is declared and initialized
+        int n = in.nextInt();
 
-      for (int i = 0; i < range.length; i++) {
-          range[i] = i+1;
-      }
+        // make array with 'n' empty elements
+        int[] range = new int[n];
 
-      System.out.println("Nums: " + Arrays.toString(range));
-      System.out.printf("Sum: %d\n", Arrays.stream(range).sum());
-  }
+        int sum = 0;
+      
+        // set array interating 'for' loop
+        for (int i = 0; i < range.length; i++) {
+            range[i] = i+1;
+        }
+
+        // print Nums (as array), Sum and 'newline'
+        System.out.println("Nums: " + Arrays.toString(range));
+        System.out.printf("Sum: %d\n", Arrays.stream(range).sum());
+    }
 }

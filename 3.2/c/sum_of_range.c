@@ -21,7 +21,7 @@ int main()
         // sum = sum + <next num>
         sum += i+1;
 
-        // print array on each iteration
+        // print elements on each iteration
         printf("%d", i+1);
 
         // suffix depends on iteration
