@@ -42,7 +42,7 @@ public class PureImpureTransparent {
     }
 
     // Function behaviour depends on ENVIRONMENT
-    // but NEVER going to change on RUNTIME
+    // but NEVER going to be changed on RUNTIME
     static int transparent_id(int num) {
         if (IMMUTABLE_X < 100)
             return num;         // id
