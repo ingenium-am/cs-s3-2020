@@ -74,7 +74,7 @@ public class GameCLI {
             // Check if set failed (cell is occupied)
             if (!set) {
                 System.out.println("Cell is already set!");
-                // start next iteration (skip following code of current loop)
+                // jump to next iteration (skip following code of current loop)
                 continue;
             }
 
