@@ -35,6 +35,7 @@ public final class TicTacToe implements Game {
 
     @Override
     public void switchTurn() {
+        // Remove first element and append at the end (switching players)
         players.add(players.remove(0));
     }
 
