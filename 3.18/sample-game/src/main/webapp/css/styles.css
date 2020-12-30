@@ -1,0 +1,79 @@
+body {
+    font-family: sans-serif;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+img {
+    display: block;
+}
+
+h3 {
+    margin-top: 24px;
+    margin-bottom: 6px;
+}
+
+h4 {
+    margin-top: 35px;
+    margin-bottom: 12px;
+}
+
+td {
+    text-align: left;
+}
+
+label.select {
+    width: auto;
+}
+
+.center {
+    text-align: center;
+}
+
+.local-user-name {
+    font-weight: bold;
+}
+
+.grid {
+    margin: 12px;
+}
+
+.info, .unknown {
+    font-size: 80%;
+    color: dimgray;
+}
+
+.accent {
+    font-size: 80%;
+    color: darkgreen;
+}
+
+.alert {
+    font-size: 80%;
+    color: darkred;
+}
+
+.online {
+    color: #222222;
+}
+
+.offline {
+    color: lightcoral;
+}
+
+#title-date {
+    margin-top: 0;
+    font-size: 80%;
+}
+
+#footer {
+    display: table;
+    margin: 12px auto;
+}
+
+#close {
+    margin-top: 24px;
+}

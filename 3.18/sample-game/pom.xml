@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- POM - Project Object Model -->
+    <!-- Configuration of Maven based Java project -->
+
+    <modelVersion>4.0.0</modelVersion>                          <!-- POM version -->
+
+    <groupId>am.ingenium.examples</groupId>                     <!-- Unique identifier of organization -->
+    <artifactId>sample-game</artifactId>                        <!-- Unique identifier of project -->
+    <version>1.0-beta</version>
+    <packaging>war</packaging>                                  <!-- Project packaging format (default is jar) -->
+
+    <properties>
+        <!-- Set predefined properties (1.8 point to JDK 8) -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Set user-defined properties for reuse -->
+
+        <!-- Here 'project.basedir' is a predefined property
+            getting the absolute path of the project in local machine -->
+        <db.local.path>${project.basedir}/sqlite</db.local.path>
+    </properties>
+
+
+    <!-- LIBRARIES (other projects) which current project uses -->
+    <dependencies>
+
+        <!-- Libraries that should be provided by web-server (e.g. Tomcat), but required compile-time -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>jasper</artifactId>
+            <version>6.0.29</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSON encoder/decoder library -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20201115</version>
+        </dependency>
+
+        <!-- DB Connection utilities (see DbUtils class) -->
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.7</version>
+        </dependency>
+
+        <!-- SQLite JDBC library -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.32.3.2</version>
+        </dependency>
+
+        <!-- BCrypt hashing for java -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <!-- BUILD CONFIGURATIONS -->
+    <build>
+
+        <!-- Plugins used to configure or run tasks -->
+        <plugins>
+
+            <!-- Default WAR packaging plugin (added for configuration) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>     <!-- FAIL if web.xml not found -->
+                </configuration>
+            </plugin>
+
+            <!-- Plugin writing POM properties to a file (see 'outputFile' below) -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>               <!-- WHEN to do (predefined option) -->
+                        <goals>
+                            <goal>write-project-properties</goal>       <!-- WHAT to do (predefined option) -->
+                        </goals>
+                        <configuration>
+                            <outputFile>
+                                ${project.basedir}/src/main/webapp/WEB-INF/db.properties
+                            </outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin running system commands - reads 'init_script.sql' and creat a DB file -->
+            <plugin>
+                <!-- CHANGE THE PATH of 'sample_game.db'
+                     (or CREATE a DB file MANUALLY and REMOVE THIS SECTION)
+                     IF target WAR is INTENDED TO RUN WITHOUT (THIS) SOURCE PROJECT - see SQLiteService class -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>               <!-- WHEN to do (predefined option) -->
+                        <goals>
+                            <goal>exec</goal>                           <!-- WHAT to do (predefined option) -->
+                        </goals>
+                        <configuration>
+                            <executable>sqlite3</executable>
+                            <commandlineArgs>sqlite/sample_game.db ".read sqlite/init_script.sql"</commandlineArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>

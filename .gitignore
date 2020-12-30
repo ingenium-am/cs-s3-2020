@@ -2,5 +2,7 @@
 **/target/
 **/out/
 *.iml
+*.db
+db.properties
 stack.yaml
 Pipfile.lock

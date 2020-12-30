@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Sign In | Game</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" />
+</head>
+<body>
+    <div class="center">
+        <h3>Sign In</h3>
+        <br>
+        <form action="/signin" method="POST">
+            <!-- Attach values of 'name' attributes (login, password) to POST request -->
+            <label>Username </label><label><input type="text" name="login"/></label><br>
+            <label>Password </label><label><input type="password" name="password"/></label><br><br>
+            <input type="submit" value="Sign In"><br><br>
+            <a href="/signup">Sign Up</a>
+        </form>
+    </div>
+</body>
+</html>
