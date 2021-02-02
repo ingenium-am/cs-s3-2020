@@ -2,7 +2,7 @@
 
 ### Clone
 
-Install GIT and run following command in directory (folder) you want to create local repository:
+Install GIT and run following command in directory (folder) where you want to create a local repository of this project:
 
 ```shell
 git clone https://github.com/ingenium-am/cs-s3-2020.git
