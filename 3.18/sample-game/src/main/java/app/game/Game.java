@@ -1,6 +1,7 @@
 package app.game;
 
 import app.data.Board;
+import app.data.Move;
 import app.data.Stone;
 
 import java.util.Date;
@@ -129,7 +130,98 @@ public class Game {
         // TODO - implement WIN logic to return true if there is a winner
         //      Pure logic may be extracted as another method
         //      (See UI title in game.jsp after implementation)
+        if (board.getMoves() > 8) {
 
+            Move lastMove = board.getLastMove();
+            byte lastX = lastMove.getX();
+            byte lastY = lastMove.getY();
+            byte checkX = lastX;
+            byte checkY = lastY;
+
+            int right = 0;
+            int left = 0;
+            int down = 0;
+            int up = 0;
+            int topLeftBottomRight = 0;
+            int bottomRightTopLeft = 0;
+            int bottomLeftTopRight = 0;
+            int topRightBottomLeft = 0;
+
+
+            while (checkX != 0 && board.getCell(--checkX, checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                left++;
+                if (left + right >= 4)
+                    return true;
+            }
+
+            checkX = lastX;
+
+            while (checkX != board.getSize() - 1 && board.getCell(++checkX, checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                right++;
+                if (right + left >= 4)
+                    return true;
+            }
+
+            checkX = lastX;
+
+            while (checkY != 0 && board.getCell(checkX, --checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                down++;
+                if (down + up >= 4)
+                    return true;
+            }
+
+            checkY = lastY;
+
+            while (checkY != board.getSize() - 1 && board.getCell(checkX, ++checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                up++;
+                if (up + down >= 4)
+                    return true;
+            }
+
+            checkY = lastY;
+
+            while (checkX != 0 && checkY != 0 && board.getCell(--checkX, --checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                topLeftBottomRight++;
+                if (topLeftBottomRight + bottomRightTopLeft >= 4)
+                    return true;
+            }
+
+            checkX = lastX;
+            checkY = lastY;
+
+            while (checkX != board.getSize() - 1 && checkY != board.getSize() - 1 && board.getCell(++checkX, ++checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                bottomRightTopLeft++;
+                if (bottomRightTopLeft + topLeftBottomRight >= 4)
+                    return true;
+            }
+
+            checkX = lastX;
+            checkY = lastY;
+
+            while (checkX != 0 && checkY != board.getSize() - 1 && board.getCell(--checkX, ++checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                bottomLeftTopRight++;
+                if (bottomLeftTopRight + topRightBottomLeft >= 4)
+                    return true;
+            }
+
+            checkX = lastX;
+            checkY = lastY;
+
+            while (checkX != board.getSize() - 1 && checkY != 0 && board.getCell(++checkX, --checkY) != null && isLastMovePlayer(checkX, checkY)) {
+                topRightBottomLeft++;
+                if (topRightBottomLeft + bottomLeftTopRight >= 4)
+                    return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    boolean isLastMovePlayer(byte x, byte y) {
+        if (board.getCell(x, y) != null) {
+            return board.getCell(x, y).getPlayerId() == board.getLastMove().getPlayerID();
+        }
         return false;
     }
 

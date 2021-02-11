@@ -10,6 +10,7 @@ public class Board {
     private final Stone[][] grid;                           // array of array of Stone class object
     private final int maxMoves;                             // max available moves (set by constructor)
     private int moves = 0;                                  // move counter (initialized as 0)
+    private Move lastMove;
 
     public Board(byte size) {
         this.grid = new Stone[size][size];                  // set empty array of array filled by nulls
@@ -50,6 +51,8 @@ public class Board {
                 grid[y][x] = stone;
 
                 moves++;    // increment move counter
+
+                lastMove = new Move(x, y, stone.getPlayerId());
             }
         }
     }
@@ -69,5 +72,13 @@ public class Board {
     public boolean coordsAreValid(byte x, byte y) {
         // Coords are valid if NOT negative and NOT exceeding size of the board
         return x >= 0 && y >= 0 && x < getSize() && y < getSize();  // NOTE: size 9 has last index 8
+    }
+
+    public Move getLastMove() {
+        return lastMove;
+    }
+
+    public Stone getCell(int x, int y) {
+        return grid[y][x];
     }
 }
