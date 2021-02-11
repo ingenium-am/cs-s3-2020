@@ -104,7 +104,7 @@
     <div id="header" class="center">
         <h3 id="title"><%=title%></h3>
         <p id="title-date"><%=creationDate%></p>
-        <p id="subtitle" class="info">Get a line of five or more stones for a win (not implemented)</p>
+        <p id="subtitle" class="info">Get a line of five or more stones for a win</p>
     </div>
 
     <%-- Game canvas and info line --%>
