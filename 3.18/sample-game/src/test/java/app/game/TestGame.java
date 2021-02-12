@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestGame {
@@ -17,7 +16,7 @@ public class TestGame {
 
     @Test
     public void testGame01() {
-        Game testGame = createTestGame(1, (byte) 9);
+        Game testGame = createTestGame((byte) 9);
 
         int[][] testTurns = new int[][]{
                 new int[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -33,16 +32,28 @@ public class TestGame {
 
         setGameState(testGame, testTurns);
 
-        assertTrue("Check horizontal (white wins)",
-                testGame.getState() == GameState.CLOSED &&
-                        testGame.win() &&
-                        testGame.getTurn() % 2 == 0);   // black's turn - white's move is the last
+        assertTrue("Check horizontal (white wins)", checkWin(testGame, PlayerNum.EVEN));
     }
 
     @Test
     public void testGame02() {
+        Game testGame = createTestGame((byte) 15);
 
-        // TODO - more tests
+        int[][] testTurns = new int[][]{
+                new int[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 9, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 7, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 5, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 3, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+                new int[]{ 0, 2, 4, 6, 8, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                new int[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+        };
+
+        setGameState(testGame, testTurns);
+
+        assertTrue("Check vertical (black wins)", checkWin(testGame, PlayerNum.ODD));   
     }
 
 
@@ -84,7 +95,19 @@ public class TestGame {
         }
     }
 
-    private Game createTestGame(long tempId, byte size) {
-        return Game.load(tempId, new Board(size), new Date(), 1, 2, GameState.STARTED);
+    private Game createTestGame(byte size) {
+        return Game.load(1, new Board(size), new Date(), 1, 2, GameState.STARTED);
+    }
+    
+    // 0 - first (black), 1 - second (white)
+    private boolean checkWin(Game game, PlayerNum pn) {
+        
+        // if black's turn - white's move is the last
+        int num = pn == PlayerNum.ODD ? 0 : 1;
+        return game.getState() == GameState.CLOSED && game.win() && game.getTurn() % 2 == num;
+    }
+    
+    private enum PlayerNum {
+        ODD, EVEN
     }
 }
